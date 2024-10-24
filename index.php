@@ -58,12 +58,12 @@ $page = `
     <body class="`.$mode.` ">
 
         <!-- Contenu principal -->
-        <h1><?php echo `.$greeting`. ?></h1>
+        <h1>`.$greeting`.</h1>
 
     </body>`
 
 
-    
+    echo $page;
 ?>
 
 
