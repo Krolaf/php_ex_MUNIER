@@ -1,34 +1,63 @@
 <?php
-// Définir aléatoirement le mode (clair ou sombre)
-$mode = rand(0, 1) ? 'dark-mode' : 'light-mode'; // 0 pour mode clair, 1 pour mode sombre
-$header = '    <link rel="stylesheet" href="style.css">';
-// Définir un message de salutation
-$greeting = "Bonne journée !";
 
-$tableau_users =array("jey","dodo","jerem","lou");
+    define('SESSION_NAME','user_session');
 
-$users = '';
-foreach($tableau_users as $user) {
-    $users .= ' </br> '. $user .' </br> ';
+    function user_is_connected(){
+        //verifier la connexion
+        return isset($_SESSION[SESSION_NAME]);
+    }
+    session_name(SESSION_NAME);
+    session_start();
+
+    
+    $page = array();
+    $page['exo1'] = 'exo1.php';
+
+    if(user_is_connected()){
+        $page['secret'] = 'secret.php';
+    }
+
+    // Gestion de la soumission du formulaire de connexion
+    if (isset($_POST['login']) && !empty($_POST['login'])) {
+        // Récupérer les données de l'utilisateur depuis le formulaire
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+
+        // Définir le login et mot de passe en dur
+        $valid_login = 'admin';
+        $valid_password = 'admin';  // Le mot de passe en dur
+
+        // Vérifier si le login et le mot de passe sont corrects
+        if ($login === $valid_login && $password === $valid_password) {
+            // Connexion réussie
+            $_SESSION[SESSION_NAME] = $login;  // Enregistrer l'utilisateur dans la session
+            header('Location: index.php');
+            exit;
+        } else {
+            // Message d'erreur si le login ou le mot de passe est incorrect
+            $html = '<div class="login_info_error">Erreur: Login ou mot de passe incorrect.</div>';
+        }
 }
 
-$page = '
-        
-    <head>
-        <title>Page d\'accueil</title>
+// Gestion des routes !
+    if (isset($_GET['page']) && isset($page[$_GET['page']])) {
+        // La page demandé existe => on va pouvoir l'afficher !
+        $url_php = $page[$_GET['page']];
+    } else {
+        // Forcer l'affichage de la page d'accueil du Front Office
+        if(user_is_connected()){
+            $url_php = $page['secret'];
+        } else {
+            $url_php = $page['exo1'];
+        }
+    }
 
-        <!-- CSS pour le style -->
-        '.$header.'
-    </head>
-    <body class="'.$mode.'" >
+    // Gestion Controleur
+    $url_php_control = str_replace('.php','_control.php',$url_php);
+    if(is_file($url_php_control)) {
+        require $url_php_control;
+    }
 
-        <!-- Contenu principal -->
-        <h1>'.$greeting.'</h1>
-        '.$users.'
-    </body>';
-
-
-    echo $page;
 ?>
 
 

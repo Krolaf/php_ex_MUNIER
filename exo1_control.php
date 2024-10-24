@@ -1,0 +1,45 @@
+<?php 
+// Définir aléatoirement le mode (clair ou sombre)
+$mode = rand(0, 1) ? 'dark-mode' : 'light-mode'; // 0 pour mode clair, 1 pour mode sombre
+
+// Ajouter une feuille de style
+$header = '<link rel="stylesheet" href="style.css">';
+
+// Définir un message de salutation
+$greeting = "Bonne journée !";
+
+// Liste d'utilisateurs
+$tableau_users = array("jey", "dodo", "jerem", "lou");
+
+// Construction de la liste d'utilisateurs à afficher
+$users = '';
+foreach ($tableau_users as $user) {
+    $users .= '<br>' . $user . '<br>';
+}
+
+// Construction de la page
+$page = '
+<head>
+    <title>Page d\'accueil</title>
+    <!-- CSS pour le style -->
+    ' . $header . '
+</head>
+<body class="' . $mode . '">
+    
+    <h2 class="connexion">Connexion</h2>
+    <form class="form_connexion" id="exo1Form" action="index.php?page=exo1" method="POST">
+        Pseudo :<br>
+        <input type="text" name="login" id="login" required/><br>
+        Mot de passe :<br>
+        <input type="password" name="password" id="password" required/><br/><br>
+        <input class="connexion_btn" type="submit" value="Se connecter">
+    </form>
+
+    <!-- Liste des utilisateurs -->
+    ' . $users . '
+</body>';
+
+// Afficher la page
+echo $page;
+
+?>
