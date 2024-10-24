@@ -14,7 +14,7 @@ $tableau_users = array("jey", "dodo", "jerem", "lou");
 // Construction de la liste d'utilisateurs à afficher
 $users = '';
 foreach ($tableau_users as $user) {
-    $users .= '<br>' . $user . '<br>';
+    $users .= ' ' . $user . ' ';
 }
 
 // Construction de la page
