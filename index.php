@@ -9,6 +9,7 @@
     session_name(SESSION_NAME);
     session_start();
 
+   
     
     $page = array();
     $page['exo1'] = 'exo1.php';
@@ -25,7 +26,7 @@
 
         // Définir le login et mot de passe en dur
         $valid_login = 'admin';
-        $valid_password = 'admin';  // Le mot de passe en dur
+        $valid_password = 'admin';  
 
         // Vérifier si le login et le mot de passe sont corrects
         if ($login === $valid_login && $password === $valid_password) {
@@ -57,7 +58,13 @@
     if(is_file($url_php_control)) {
         require $url_php_control;
     }
-
+ // Déconnecter l'utilisateur à chaque chargement de page
+ if (isset($_SESSION[SESSION_NAME])) {
+    // Détruire la session
+    session_unset();  // Supprime toutes les variables de session
+    session_destroy();  // Détruit la session
+    session_write_close(); // Ferme la session pour s'assurer qu'elle ne peut plus être utilisée
+}
 ?>
 
 

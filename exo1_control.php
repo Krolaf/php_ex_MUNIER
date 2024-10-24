@@ -6,7 +6,7 @@ $mode = rand(0, 1) ? 'dark-mode' : 'light-mode'; // 0 pour mode clair, 1 pour mo
 $header = '<link rel="stylesheet" href="style.css">';
 
 // Définir un message de salutation
-$greeting = "Bonne journée !";
+$greeting = "Bonjour humain !";
 
 // Liste d'utilisateurs
 $tableau_users = array("jey", "dodo", "jerem", "lou");
