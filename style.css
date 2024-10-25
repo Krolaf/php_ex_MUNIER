@@ -111,15 +111,20 @@
     /* LEFT ZONE */
 
     .admin-container, .player-container {
-        padding: 20px;
+        
         height: 200px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         background-color: aquamarine;
-        width: 21vw;
+        width: 22vw;
         height: 100vh;
         position: fixed;
+    }
+
+    .admin-container div.card, .player-container div.card {
+        height: 220px;
     }
 
    

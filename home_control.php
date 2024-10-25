@@ -36,21 +36,38 @@ if (isset($_GET['edit_id']) && !empty($_GET['edit_id'])) {
     $selected_item = $db->build_r_from_id('t_champion', $id_item); // Récupère les infos du personnage sélectionné
 }
 
-// Envoi des modifications en base de données
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_id'])) {
-    $id = $_POST['update_id'];
-    $updated_data = [
-        'hp' => $_POST['hp'],
-        'force' => $_POST['force'],
-        'intelligence' => $_POST['intelligence'],
-        'endurance' => $_POST['endurance'],
-        'dexterité' => $_POST['dexterité']
-    ];
-    $db->sql_update('t_champion', $id, $updated_data);
+// Traitement du formulaire de création ou de mise à jour
+$error_message = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validation côté serveur pour le champ name
+    if (empty($_POST['name'])) {
+        $error_message = "Le nom du personnage ne peut pas être vide.";
+    } elseif (strlen($_POST['name']) > 15) {
+        $error_message = "Le nom ne peut pas dépasser 15 caractères.";
+    } else {
+        // Récupération des valeurs du formulaire
+        $new_data = [
+            'name' => $_POST['name'],
+            'hp' => $_POST['hp'],
+            'force' => $_POST['force'],
+            'intelligence' => $_POST['intelligence'],
+            'endurance' => $_POST['endurance'],
+            'dexterité' => $_POST['dexterité']
+        ];
 
-    header("Location: index.php"); // Redirection après modification
-    exit();
+        if (!empty($_POST['update_id'])) {
+            // Mise à jour si un ID est fourni
+            $db->sql_update('t_champion', $_POST['update_id'], $new_data);
+        } else {
+            // Création d'un nouveau personnage si aucun ID n'est fourni
+            $db->sql_insert('t_champion', $new_data);
+        }
+
+        header("Location: index.php"); // Redirection après modification ou création
+        exit();
+    }
 }
+
 
 $page = '
 <head>
@@ -61,11 +78,14 @@ $page = '
 <body class="' . $mode . '">
 <main>
 <div class="admin-container">
-    <!-- Section pour afficher et modifier les informations du personnage sélectionné -->
+   
+    <!-- Section pour afficher modifier et creer les informations d\'un nouveau personnage -->
     <div class="card">
         <form method="POST" action="index.php">
-            <h2>' . ($selected_item ? $selected_item['name'] : 'Titre') . '</h2>
             <input type="hidden" name="update_id" value="' . ($selected_item ? $selected_item['id'] : '') . '">
+            <h2><span class="stat">Nom:</span>
+                <input type="text" name="name" value="' . ($selected_item ? $selected_item['name'] : '') . '">
+            </h2>
             <p><span class="stat">HP:</span>
                 <button type="button" onclick="modifyStat(\'hp\', -1)">-</button>
                 <input type="number" id="hp" name="hp" value="' . ($selected_item ? $selected_item['hp'] : 0) . '" readonly>
@@ -91,40 +111,7 @@ $page = '
                 <input type="number" id="dexterité" name="dexterité" value="' . ($selected_item ? $selected_item['dexterité'] : 0) . '" readonly>
                 <button type="button" onclick="modifyStat(\'dexterité\', 1)">+</button>
             </p>
-            <button type="submit" class="edit-btn">Modifier<i class="fa-solid fa-pen"></i> </button>
-        </form>
-    </div>
-    <!-- Section pour afficher et creer les informations d\'un nouveau personnage -->
-    <div class="card">
-        <form method="POST" action="index.php">
-            <h2>' . ($selected_item ? $selected_item['name'] : 'Titre') . '</h2>
-            <input type="hidden" name="update_id" value="' . ($selected_item ? $selected_item['id'] : '') . '">
-            <p><span class="stat">HP:</span>
-                <button type="button" onclick="modifyStat(\'hp\', -1)">-</button>
-                <input type="number" id="hp" name="hp" value="' . ($selected_item ? $selected_item['hp'] : 0) . '" readonly>
-                <button type="button" onclick="modifyStat(\'hp\', 1)">+</button>
-            </p>
-            <p><span class="stat">Force:</span>
-                <button type="button" onclick="modifyStat(\'force\', -1)">-</button>
-                <input type="number" id="force" name="force" value="' . ($selected_item ? $selected_item['force'] : 0) . '" readonly>
-                <button type="button" onclick="modifyStat(\'force\', 1)">+</button>
-            </p>
-            <p><span class="stat">Intelligence:</span>
-                <button type="button" onclick="modifyStat(\'intelligence\', -1)">-</button>
-                <input type="number" id="intelligence" name="intelligence" value="' . ($selected_item ? $selected_item['intelligence'] : 0) . '" readonly>
-                <button type="button" onclick="modifyStat(\'intelligence\', 1)">+</button>
-            </p>
-            <p><span class="stat">Endurance:</span>
-                <button type="button" onclick="modifyStat(\'endurance\', -1)">-</button>
-                <input type="number" id="endurance" name="endurance" value="' . ($selected_item ? $selected_item['endurance'] : 0) . '" readonly>
-                <button type="button" onclick="modifyStat(\'endurance\', 1)">+</button>
-            </p>
-            <p><span class="stat">Dexterité:</span>
-                <button type="button" onclick="modifyStat(\'dexterité\', -1)">-</button>
-                <input type="number" id="dexterité" name="dexterité" value="' . ($selected_item ? $selected_item['dexterité'] : 0) . '" readonly>
-                <button type="button" onclick="modifyStat(\'dexterité\', 1)">+</button>
-            </p>
-            <button type="submit" class="edit-btn"><i class="fa-solid fa-plus"></i>Modifier<i class="fa-solid fa-plus"></i></i> </button>
+            <button type="submit" class="edit-btn">' . ($selected_item ? 'Modifier <i class="fa-solid fa-pen"></i>' : ' creer <i class="fa-solid fa-plus"></i></i>') . '</button>
         </form>
     </div>
 </div>
