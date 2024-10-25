@@ -9,13 +9,13 @@
     session_name(SESSION_NAME);
     session_start();
 
-   
+   require_once 'data.class.php';
     
     $page = array();
-    $page['exo1'] = 'exo1.php';
+    $page['connect'] = 'connect.php';
 
     if(user_is_connected()){
-        $page['secret'] = 'secret.php';
+        $page['home'] = 'home.php';
     }
 
     // Gestion de la soumission du formulaire de connexion
@@ -47,9 +47,9 @@
     } else {
         // Forcer l'affichage de la page d'accueil du Front Office
         if(user_is_connected()){
-            $url_php = $page['secret'];
+            $url_php = $page['home'];
         } else {
-            $url_php = $page['exo1'];
+            $url_php = $page['connect'];
         }
     }
 

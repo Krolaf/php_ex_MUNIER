@@ -27,7 +27,7 @@ $page = '
 <body class="' . $mode . '">
     
     <h2 class="connexion">Connexion</h2>
-    <form class="form_connexion" id="exo1Form" action="index.php?page=exo1" method="POST">
+    <form class="form_connexion" id="connectForm" action="index.php?page=connect" method="POST">
         Pseudo :<br>
         <input type="text" name="login" id="login" required/><br>
         Mot de passe :<br>
