@@ -26,6 +26,28 @@
         text-align: center;
         padding-top: 20vh;
     }
+
+    main {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .navbar{
+        position: fixed;
+        left: 21.4vw;
+        background-color: red;
+        width: 4vw;
+        height: 100vh;
+    }
+
+    button {
+        all: unset;
+        /* Supprime tous les styles hérités et par défaut */
+        display: inline-block; 
+        cursor: pointer; /* Rétablit le curseur en forme de main */
+        color: #333;
+    }
+
     /* CONTAINER CARD */
 
     /* Style de la zone de listing */
@@ -35,38 +57,8 @@
         gap: 20px;
         justify-content: center;
         padding: 20px;
-    }
-
-    /* Style de chaque card dans le listing */
-    .listing-container .card {
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        width: 300px;
-        text-align: center;
-        font-family: Arial, sans-serif;
-    }
-
-    .listing-container .card h2 {
-        margin-top: 0;
-        font-size: 24px;
-        color: #333;
-    }
-
-    .listing-container .card p {
-        margin: 5px 0;
-        font-size: 16px;
-        color: #666;
-    }
-
-    .listing-container .card .stat {
-        font-weight: bold;
-        color: #444;
-    }
-
-    .listing-container .card .stat-value {
-        color: #007BFF;
+        width: 100%;
+        margin-left: 23vw;
     }
 
     /* CARD CHAMPION */ 
@@ -74,9 +66,11 @@
         border: 1px solid #ddd;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px;
         margin: 10px;
-        width: 300px;
+        width: 200px;
+        height: 28%;
+        padding: 10px;
+        text-align: center;
         background-color: #f9f9f9;
         font-family: Arial, sans-serif;
     }
@@ -97,3 +91,23 @@
     .card .stat-value {
         color: #007BFF;
     }
+
+    .btn_zone{
+
+    }
+
+
+
+    /* LEFT ZONE */
+
+    .admin-container, .player-container {
+        padding: 20px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        background-color: aquamarine;
+        width: 21vw;
+        height: 100vh;
+        position: fixed;
+    }
+
