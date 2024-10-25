@@ -98,8 +98,12 @@
         color: #007BFF;
     }
 
-    .btn_zone{
-
+    input#hp,
+    input#force,
+    input#intelligence,
+    input#endurance,
+    input#dexterité{
+        width: 40px;
     }
 
 
@@ -110,6 +114,7 @@
         padding: 20px;
         height: 200px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         background-color: aquamarine;
         width: 21vw;
@@ -117,3 +122,4 @@
         position: fixed;
     }
 
+   
