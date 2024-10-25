@@ -10,11 +10,18 @@ $header = '<link rel="stylesheet" href="style.css">';
 // Définir un message de salutation
 $greeting = "Bonne journée HUMAIN !";
 
+$sql = 'SELECT 
+            c.id, 
+            c.name, 
+            c.hp, 
+            c.force, 
+            c.intelligence, 
+            c.endurance, 
+            c.dexterité
+        FROM t_champion AS c';
 
-$sql = 'SELECT * FROM `movies`';
 
 $datas_items = $db->get_data($sql);
-
 
 
 $page = '
@@ -29,15 +36,21 @@ $page = '
 
     ';
 
-    if(!empty($datas_items)) {
+    if (!empty($datas_items)) {
         foreach ($datas_items as $data_item) {
-    $page .='
-
-            
-
-            ';        
+            $page .= '
+                <p>
+                    <strong>ID:</strong> ' . $data_item['id'] . '<br>
+                    <strong>Name:</strong> ' . $data_item['name'] . '<br>
+                    <strong>HP:</strong> ' . $data_item['hp'] . '<br>
+                    <strong>Force:</strong> ' . $data_item['force'] . '<br>
+                    <strong>Intelligence:</strong> ' . $data_item['intelligence'] . '<br>
+                    <strong>Endurance:</strong> ' . $data_item['endurance'] . '<br>
+                    <strong>Dexterité:</strong> ' . $data_item['dexterité'] . '<br>
+                </p>
+            ';
+        }
     }
-}
 
 
 echo $page;

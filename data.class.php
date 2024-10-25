@@ -23,6 +23,8 @@ class Data{
             $this->pdo->exec("SET CHARACTER SET 'utf8mb4';");
             $this->pdo->exec("SET collation_connection = 'utf8mb4_general_ci';");
 
+            // echo "Connexion réussie à la base de données."; // Confirmation de la connexion
+
         } catch (PDOException $e) {
             // Gestion des erreurs de connexion
             die($this->error_serveur . " Détails: " . $e->getMessage());
@@ -32,11 +34,12 @@ class Data{
     // Méthode pour exécuter une requête SQL
     public function query($sql){
         try {
-            if(!empty($sql)) {
+            if (!empty($sql)) {
                 $result = $this->pdo->query($sql);
                 return $result;
             }
         } catch (PDOException $e) {
+            echo "Erreur dans la requête SQL : " . $e->getMessage();  // Affichage de l'erreur SQL
             return false;
         }
     }
