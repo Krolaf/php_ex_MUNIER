@@ -65,6 +65,21 @@
         padding: 20px;
         width: 100%;
         margin-left: 23vw;
+        padding-top: 80px;
+    }
+
+    /* style de la zone de sorting */
+    .sort-zone{
+        width: 67.2vw;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(100, 132, 132);
+        position: fixed;
+        top: 15px;
+        left: 27.8vw;
+        border-radius: 10px;
     }
 
     /* CARD CHAMPION */ 
@@ -103,7 +118,7 @@
     input#intelligence,
     input#endurance,
     input#dexterité{
-        width: 40px;
+        width: 45px;
     }
 
 

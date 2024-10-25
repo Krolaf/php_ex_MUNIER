@@ -7,3 +7,9 @@
         statInput.value = currentValue > 0 ? currentValue : 0; // Empêche les valeurs négatives
     }
 }
+
+ // Fonction pour rediriger avec le tri sélectionné
+ function applySorting() {
+    const sort = document.getElementById('sort').value;
+    window.location.href = "index.php?sort=" + sort;
+}

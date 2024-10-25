@@ -7,7 +7,54 @@ $header = ' <link rel="stylesheet" href="style.css">
             <script src="script.js"></script>
             ';
 
-// Requête SQL pour récupérer tous les éléments
+// Définir l'ordre par défaut
+$order_by = "c.name ASC";
+
+// Vérifier si un tri est demandé et adapter l'ordre
+if (isset($_GET['sort'])) {
+    switch ($_GET['sort']) {
+        case 'name-asc':
+            $order_by = "c.name ASC";
+            break;
+        case 'name-desc':
+            $order_by = "c.name DESC";
+            break;
+        case 'hp-asc':
+            $order_by = "c.hp ASC";
+            break;
+        case 'hp-desc':
+            $order_by = "c.hp DESC";
+            break;
+        case 'force-asc':
+            $order_by = "c.force ASC";
+            break;
+        case 'force-desc':
+            $order_by = "c.force DESC";
+            break;
+        case 'intelligence-asc':
+            $order_by = "c.intelligence ASC";
+            break;
+        case 'intelligence-desc':
+            $order_by = "c.intelligence DESC";
+            break;
+        case 'endurance-asc':
+            $order_by = "c.endurance ASC";
+            break;
+        case 'endurance-desc':
+            $order_by = "c.endurance DESC";
+            break;
+        case 'dexterite-asc':
+            $order_by = "c.dexterité ASC";
+            break;
+        case 'dexterite-desc':
+            $order_by = "c.dexterité DESC";
+            break;
+        default:
+            $order_by = "c.name ASC"; // Tri par défaut
+    }
+}
+
+// Requête SQL avec l'ordre de tri dynamique
 $sql = 'SELECT 
             c.id, 
             c.name, 
@@ -16,7 +63,8 @@ $sql = 'SELECT
             c.intelligence, 
             c.endurance, 
             c.dexterité
-        FROM t_champion AS c';
+        FROM t_champion AS c
+        ORDER BY ' . $order_by;
 
 $datas_items = $db->get_data($sql);
 
@@ -88,27 +136,27 @@ $page = '
             </h2>
             <p><span class="stat">HP:</span>
                 <button type="button" onclick="modifyStat(\'hp\', -1)">-</button>
-                <input type="number" id="hp" name="hp" value="' . ($selected_item ? $selected_item['hp'] : 0) . '" readonly>
+                <input type="number" id="hp" name="hp" value="' . ($selected_item ? $selected_item['hp'] : 0) . '" >
                 <button type="button" onclick="modifyStat(\'hp\', 1)">+</button>
             </p>
             <p><span class="stat">Force:</span>
                 <button type="button" onclick="modifyStat(\'force\', -1)">-</button>
-                <input type="number" id="force" name="force" value="' . ($selected_item ? $selected_item['force'] : 0) . '" readonly>
+                <input type="number" id="force" name="force" value="' . ($selected_item ? $selected_item['force'] : 0) . '" >
                 <button type="button" onclick="modifyStat(\'force\', 1)">+</button>
             </p>
             <p><span class="stat">Intelligence:</span>
                 <button type="button" onclick="modifyStat(\'intelligence\', -1)">-</button>
-                <input type="number" id="intelligence" name="intelligence" value="' . ($selected_item ? $selected_item['intelligence'] : 0) . '" readonly>
+                <input type="number" id="intelligence" name="intelligence" value="' . ($selected_item ? $selected_item['intelligence'] : 0) . '" >
                 <button type="button" onclick="modifyStat(\'intelligence\', 1)">+</button>
             </p>
             <p><span class="stat">Endurance:</span>
                 <button type="button" onclick="modifyStat(\'endurance\', -1)">-</button>
-                <input type="number" id="endurance" name="endurance" value="' . ($selected_item ? $selected_item['endurance'] : 0) . '" readonly>
+                <input type="number" id="endurance" name="endurance" value="' . ($selected_item ? $selected_item['endurance'] : 0) . '" >
                 <button type="button" onclick="modifyStat(\'endurance\', 1)">+</button>
             </p>
             <p><span class="stat">Dexterité:</span>
                 <button type="button" onclick="modifyStat(\'dexterité\', -1)">-</button>
-                <input type="number" id="dexterité" name="dexterité" value="' . ($selected_item ? $selected_item['dexterité'] : 0) . '" readonly>
+                <input type="number" id="dexterité" name="dexterité" value="' . ($selected_item ? $selected_item['dexterité'] : 0) . '" >
                 <button type="button" onclick="modifyStat(\'dexterité\', 1)">+</button>
             </p>
             <button type="submit" class="edit-btn">' . ($selected_item ? 'Modifier <i class="fa-solid fa-pen"></i>' : ' creer <i class="fa-solid fa-plus"></i></i>') . '</button>
@@ -117,10 +165,33 @@ $page = '
 </div>
 
 <div class="navbar">
-    banane
+
+
+
 </div>
 
-<div class="listing-container">';
+<div class="listing-container">
+<div class="sort-zone">
+        <label for="sort">Trier par:</label>
+    <select id="sort" onchange="applySorting()">
+        <option value="name-asc">Nom (A-Z)</option>
+        <option value="name-desc">Nom (Z-A)</option>
+        <option value="hp-asc">HP (Croissant)</option>
+        <option value="hp-desc">HP (Décroissant)</option>
+        <option value="force-asc">Force (Croissant)</option>
+        <option value="force-desc">Force (Décroissant)</option>
+        <option value="intelligence-asc">Intelligence (Croissant)</option>
+        <option value="intelligence-desc">Intelligence (Décroissant)</option>
+        <option value="endurance-asc">Endurance (Croissant)</option>
+        <option value="endurance-desc">Endurance (Décroissant)</option>
+        <option value="dexterite-asc">Dextérité (Croissant)</option>
+        <option value="dexterite-desc">Dextérité (Décroissant)</option>
+    </select>
+</div>
+';
+
+
+
 
 // Boucle sur les éléments récupérés
 if (!empty($datas_items)) {

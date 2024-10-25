@@ -58,12 +58,21 @@ class Data{
     }
     
      // Récupération des données à partir d'une requête SQL
-     public function get_data($sql){
-        $result = $this->query($sql);
-        if($result) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
+     public function get_data($sql, $params = []) {
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            
+            // Lier les paramètres s'ils sont fournis
+            foreach ($params as $key => $value) {
+                $stmt->bindValue($key, $value);
+            }
+            
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Erreur lors de la récupération des données : " . $e->getMessage();
+            return false;
         }
-        return false;
     }
     // Insertion dans la base de données
     public function sql_insert($table, $data){
