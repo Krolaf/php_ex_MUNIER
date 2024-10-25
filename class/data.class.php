@@ -56,7 +56,15 @@ class Data{
         }
         return false;
     }
-
+    
+     // Récupération des données à partir d'une requête SQL
+     public function get_data($sql){
+        $result = $this->query($sql);
+        if($result) {
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return false;
+    }
     // Insertion dans la base de données
     public function sql_insert($table, $data){
         $columns = implode('`, `', array_keys($data));
@@ -82,14 +90,7 @@ class Data{
         return $this->query($sql);
     }
 
-    // Récupération des données à partir d'une requête SQL
-    public function get_data($sql){
-        $result = $this->query($sql);
-        if($result) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        }
-        return false;
-    }
+   
 
     // Récupération des informations à partir d'un ID
     public function build_r_from_id($table, $id){

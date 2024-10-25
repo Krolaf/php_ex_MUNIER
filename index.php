@@ -1,5 +1,6 @@
 <?php
 
+    $mode = rand(0, 1) ? 'dark-mode' : 'light-mode'; 
     define('SESSION_NAME','user_session');
 
     function user_is_connected(){
@@ -9,14 +10,9 @@
     session_name(SESSION_NAME);
     session_start();
 
-   require_once 'data.class.php';
+    require_once 'class/data.class.php';
+    require_once 'param/route.php';
     
-    $page = array();
-    $page['connect'] = 'connect.php';
-
-    if(user_is_connected()){
-        $page['home'] = 'home.php';
-    }
 
     // Gestion de la soumission du formulaire de connexion
     if (isset($_POST['login']) && !empty($_POST['login'])) {
@@ -40,31 +36,18 @@
         }
 }
 
-// Gestion des routes !
-    if (isset($_GET['page']) && isset($page[$_GET['page']])) {
-        // La page demandé existe => on va pouvoir l'afficher !
-        $url_php = $page[$_GET['page']];
-    } else {
-        // Forcer l'affichage de la page d'accueil du Front Office
-        if(user_is_connected()){
-            $url_php = $page['home'];
-        } else {
-            $url_php = $page['connect'];
-        }
-    }
-
     // Gestion Controleur
     $url_php_control = str_replace('.php','_control.php',$url_php);
     if(is_file($url_php_control)) {
         require $url_php_control;
     }
- // Déconnecter l'utilisateur à chaque chargement de page
- if (isset($_SESSION[SESSION_NAME])) {
-    // Détruire la session
-    session_unset();  // Supprime toutes les variables de session
-    session_destroy();  // Détruit la session
-    session_write_close(); // Ferme la session pour s'assurer qu'elle ne peut plus être utilisée
-}
+    // Déconnecter l'utilisateur à chaque chargement de page
+    if (isset($_SESSION[SESSION_NAME])) {
+        // Détruire la session
+        session_unset();  // Supprime toutes les variables de session
+        session_destroy();  // Détruit la session
+        session_write_close(); // Ferme la session pour s'assurer qu'elle ne peut plus être utilisée
+    }
 ?>
 
 

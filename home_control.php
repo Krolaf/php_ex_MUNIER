@@ -1,14 +1,9 @@
 <?php 
 $db = new data();
 
-// Définir aléatoirement le mode (clair ou sombre)
-$mode = rand(0, 1) ? 'dark-mode' : 'light-mode'; // 0 pour mode clair, 1 pour mode sombre
-
 // Ajouter une feuille de style
 $header = '<link rel="stylesheet" href="style.css">';
 
-// Définir un message de salutation
-$greeting = "Bonne journée HUMAIN !";
 
 $sql = 'SELECT 
             c.id, 
@@ -31,28 +26,28 @@ $page = '
     ' . $header . '
 </head>
 <body class="' . $mode . '">
-    <!-- Contenu principal -->
-    <h1>' . $greeting . '</h1>
 
-    ';
+<div class="listing-container">';
+
+
 
     if (!empty($datas_items)) {
         foreach ($datas_items as $data_item) {
             $page .= '
-                <p>
-                    <strong>ID:</strong> ' . $data_item['id'] . '<br>
-                    <strong>Name:</strong> ' . $data_item['name'] . '<br>
-                    <strong>HP:</strong> ' . $data_item['hp'] . '<br>
-                    <strong>Force:</strong> ' . $data_item['force'] . '<br>
-                    <strong>Intelligence:</strong> ' . $data_item['intelligence'] . '<br>
-                    <strong>Endurance:</strong> ' . $data_item['endurance'] . '<br>
-                    <strong>Dexterité:</strong> ' . $data_item['dexterité'] . '<br>
-                </p>
+            <div class="card">
+                <h2>' . $data_item['name'] . '</h2>
+                <p><span class="stat">ID:</span> <span class="stat-value">' . $data_item['id'] . '</span></p>
+                <p><span class="stat">HP:</span> <span class="stat-value">' . $data_item['hp'] . '</span></p>
+                <p><span class="stat">Force:</span> <span class="stat-value">' . $data_item['force'] . '</span></p>
+                <p><span class="stat">Intelligence:</span> <span class="stat-value">' . $data_item['intelligence'] . '</span></p>
+                <p><span class="stat">Endurance:</span> <span class="stat-value">' . $data_item['endurance'] . '</span></p>
+                <p><span class="stat">Dexterité:</span> <span class="stat-value">' . $data_item['dexterité'] . '</span></p>
+            </div>
             ';
         }
     }
 
-
+$page .= '</div>';
 echo $page;
 
 ?>

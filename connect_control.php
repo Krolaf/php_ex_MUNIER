@@ -1,6 +1,6 @@
 <?php 
 // Définir aléatoirement le mode (clair ou sombre)
-$mode = rand(0, 1) ? 'dark-mode' : 'light-mode'; // 0 pour mode clair, 1 pour mode sombre
+
 
 // Ajouter une feuille de style
 $header = '<link rel="stylesheet" href="style.css">';
@@ -25,7 +25,7 @@ $page = '
     ' . $header . '
 </head>
 <body class="' . $mode . '">
-    
+    <div class="connection">
     <h2 class="connexion">Connexion</h2>
     <form class="form_connexion" id="connectForm" action="index.php?page=connect" method="POST">
         Pseudo :<br>
@@ -34,9 +34,7 @@ $page = '
         <input type="password" name="password" id="password" required/><br/><br>
         <input class="connexion_btn" type="submit" value="Se connecter">
     </form>
-
-    <!-- Liste des utilisateurs -->
-    ' . $users . '
+    </div>
 </body>';
 
 // Afficher la page
