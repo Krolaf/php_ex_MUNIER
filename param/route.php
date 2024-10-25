@@ -1,10 +1,11 @@
 <?php
 
         $page = array();
-        $page['home'] = 'home.php'; //connect
+        $page['connect'] = 'connect.php'; //connect
 
         if(user_is_connected()){
             $page['home'] = 'home.php';
+            $page['logout'] = 'logout.php';
         }
 
         // Gestion des routes !
@@ -16,7 +17,13 @@
             if(user_is_connected()){
                 $url_php = $page['home'];
             } else {
-                $url_php = $page['home']; //connect
+                $url_php = $page['connect']; //connect
             }
+        }
+
+                // Gestion Controleur
+        $url_php_control = str_replace('.php','_control.php',$url_php);
+        if(is_file($url_php_control)) {
+            require $url_php_control;
         }
 ?>

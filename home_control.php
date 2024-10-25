@@ -126,9 +126,10 @@ $page = '
 <body class="' . $mode . '">
 <main>
 <div class="admin-container">
-   
+
     <!-- Section pour afficher modifier et creer les informations d\'un nouveau personnage -->
     <div class="card">
+    
         <form method="POST" action="index.php">
             <input type="hidden" name="update_id" value="' . ($selected_item ? $selected_item['id'] : '') . '">
             <h2><span class="stat">Nom:</span>
@@ -172,6 +173,7 @@ $page = '
 
 <div class="listing-container">
 <div class="sort-zone">
+   <button onclick="window.location.href=\'index.php?page=logout.php\'">Se deconnecter</button>
         <label for="sort">Trier par:</label>
     <select id="sort" onchange="applySorting()">
         <option value="name-asc">Nom (A-Z)</option>
